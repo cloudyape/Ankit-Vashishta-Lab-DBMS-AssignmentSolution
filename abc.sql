@@ -34,3 +34,5 @@ INSERT INTO `rating` (`RAT_ID`, `CUS_ID`, `SUPP_ID`, `RAT_RATSTARS`) VALUES ('1'
 SELECT count('CUS_GENDER') FROM customer c inner join  `order` o on c.CUS__ID = o.CUS_ID where o.ORD_AMOUNT > 3000 group by c.CUS_GENDER;
 
 SELECT o.* , c.PRO_NAME FROM `product` c inner join  `order` o on c.PRO_ID = o.PROD_ID where o.CUS_ID = 2;
+
+SELECT * from supplier where SUPP_ID in(SELECT productdetails.SUPP_ID from productdetails productdetails group by productdetails.SUPP_ID having count(productdetails.SUPP_ID) > 1)
