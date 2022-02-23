@@ -35,4 +35,21 @@ SELECT count('CUS_GENDER') FROM customer c inner join  `order` o on c.CUS__ID = 
 
 SELECT o.* , c.PRO_NAME FROM `product` c inner join  `order` o on c.PRO_ID = o.PROD_ID where o.CUS_ID = 2;
 
-SELECT * from supplier where SUPP_ID in(SELECT productdetails.SUPP_ID from productdetails productdetails group by productdetails.SUPP_ID having count(productdetails.SUPP_ID) > 1)
+SELECT * from supplier where SUPP_ID in(SELECT productdetails.SUPP_ID from productdetails productdetails group by productdetails.SUPP_ID having count(productdetails.SUPP_ID) > 1);
+
+SELECT CAT_NAME from category where CAT_ID = (SELECT products.CAT_ID from product products inner join `order` orders on products.PRO_ID = orders.PROD_ID where orders.ORD_AMOUNT = (SELECT min(ORD_AMOUNT) from `order`));
+
+SELECT PRO_ID, PRO_NAME from product where PRO_ID in (SELECT PRO_ID from `order` where ORD_DATE > '2021-10-05');
+
+SELECT CUS_NAME, CUS_GENDER from customer where CUS_NAME like '%A' or CUS_NAME like '%A';
+
+CREATE PROCEDURE `ratingsProcedureForSuppliers` ()
+BEGIN
+SELECT supplier.supp_name, supplier.supp_id, rating.rat_ratstars,
+case
+when rating.rat_ratstars > 4 then 'Genuine Supplier'
+when rating.rat_ratstars > 2 then 'Average Supplier'
+else 'Supplier Should Not be COnsidered'
+end as verdict from rating inner join supplier on supplier.supp_id = rating.supp_id
+
+END
