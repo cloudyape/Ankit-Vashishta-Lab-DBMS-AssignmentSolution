@@ -30,3 +30,7 @@ INSERT INTO `productdetails` (`PROD_ID`, `PRO_ID`, `SUPP_ID`, `PRICE`) VALUES (N
 INSERT INTO `order` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PROD_ID`) VALUES ('20', '1500', '2021-10-12', '3', '5'), ('25', '30500', '2021-09-16', '5', '2'), ('26', '2000', '2021-10-95', '1', '1'), ('30', '3500', '2021-8-16', '4', '3'), ('50', '2000', '2021-10-06', '2', '1');
 
 INSERT INTO `rating` (`RAT_ID`, `CUS_ID`, `SUPP_ID`, `RAT_RATSTARS`) VALUES ('1', '2', '2', '4'), ('2', '3', '4', '3'), ('3', '5', '1', '5'), ('4', '1', '3', '2'), ('5', '5', '5', '4');
+
+SELECT count('CUS_GENDER') FROM customer c inner join  `order` o on c.CUS__ID = o.CUS_ID where o.ORD_AMOUNT > 3000 group by c.CUS_GENDER;
+
+SELECT o.* , c.PRO_NAME FROM `product` c inner join  `order` o on c.PRO_ID = o.PROD_ID where o.CUS_ID = 2;
