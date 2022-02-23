@@ -1,3 +1,4 @@
+-- # 1-----------------
 drop database if exists `e-commerce`;
 CREATE database `e-commerce`;
 
@@ -16,7 +17,7 @@ CREATE TABLE `e-commerce`.`Order` ( `ORD_ID` INT(255) NOT NULL AUTO_INCREMENT , 
 CREATE TABLE `e-commerce`.`Rating` ( `RAT_ID` INT(255) NOT NULL AUTO_INCREMENT , `CUS_ID` INT(255) NOT NULL , `SUPP_ID` INT(255) NOT NULL , `RAT_RATSTARS` INT(255) NOT NULL , PRIMARY KEY (`RAT_ID`));
 
 
-
+-- # 2-----------------
 INSERT INTO `Supplier` (`SUPP_ID`, `SUPP_NAME`, `SUPP_CITY`, `SUPP_PHONE`) VALUES (NULL, 'Rajesh Retails', 'Delhi', '1234567890'), (NULL, 'Appario Ltd.', 'Mumbai', '2589631470'), (NULL, 'Knome products', 'Banglore', '9785462315'), (NULL, 'Bansal Retails', 'Kochi', '8975463285'), (NULL, 'Mittal Ltd.', 'Lucknow', '7898456532');
 
 INSERT INTO `customer` (`CUS__ID`, `CUS_NAME`, `CUS_PHONE`, `CUS_CITY`, `CUS_GENDER`) VALUES (NULL, 'AAKASH', '9999999999', 'DELHI', 'M'), (NULL, 'AMAN', '9785463215', 'NOIDA', 'M'), (NULL, 'NEHA', '9999999999', 'MUMBAI', 'F'), (NULL, 'MEGHA', '9994562399', 'KOLKATA', 'F'), (NULL, 'PULKIT', '7895999999', 'LUCKNOW', 'M');
@@ -31,17 +32,31 @@ INSERT INTO `order` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PROD_ID`) VA
 
 INSERT INTO `rating` (`RAT_ID`, `CUS_ID`, `SUPP_ID`, `RAT_RATSTARS`) VALUES ('1', '2', '2', '4'), ('2', '3', '4', '3'), ('3', '5', '1', '5'), ('4', '1', '3', '2'), ('5', '5', '5', '4');
 
+-- # 3-----------------
+
 SELECT count('CUS_GENDER') FROM customer c inner join  `order` o on c.CUS__ID = o.CUS_ID where o.ORD_AMOUNT > 3000 group by c.CUS_GENDER;
+
+-- # 4-----------------
 
 SELECT o.* , c.PRO_NAME FROM `product` c inner join  `order` o on c.PRO_ID = o.PROD_ID where o.CUS_ID = 2;
 
+-- # 5-----------------
+
 SELECT * from supplier where SUPP_ID in(SELECT productdetails.SUPP_ID from productdetails productdetails group by productdetails.SUPP_ID having count(productdetails.SUPP_ID) > 1);
+
+-- # 6-----------------
 
 SELECT CAT_NAME from category where CAT_ID = (SELECT products.CAT_ID from product products inner join `order` orders on products.PRO_ID = orders.PROD_ID where orders.ORD_AMOUNT = (SELECT min(ORD_AMOUNT) from `order`));
 
+-- # 7-----------------
+
 SELECT PRO_ID, PRO_NAME from product where PRO_ID in (SELECT PRO_ID from `order` where ORD_DATE > '2021-10-05');
 
+-- # 8-----------------
+
 SELECT CUS_NAME, CUS_GENDER from customer where CUS_NAME like '%A' or CUS_NAME like '%A';
+
+-- # 9-----------------
 
 CREATE PROCEDURE `ratingsProcedureForSuppliers` ()
 BEGIN
